@@ -1,5 +1,6 @@
 from twython import Twython
 import os
+import datetime
 
 CONSUMER_KEY = 'GLTiEnGQDx1ECP4vQkBaXNNVF'
 CONSUMER_SECRET = 'Z6iMkx29WAVKV5IQ3Fr8l2v7k323HgZRVYzNHa44rl093UShAy'
@@ -11,4 +12,8 @@ api = Twython(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_KEY, ACCESS_SECRET)
 cmd = '/opt/vc/bin/vcgencmd measure_temp'
 line = os.popen(cmd).readline().strip()
 temp = line.split('=')[1].split("'")[0]
-api.update_status(status='My current CPU temperature is '+temp+' C')
+
+try:
+	api.update_status(status='My current CPU temperature is '+temp+' C')
+except:
+	api.update_status(status= 'No change in CPU temperature. '+ str(datetime.datetime.today()) + ' is the time')
